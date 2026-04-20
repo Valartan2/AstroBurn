@@ -118,6 +118,13 @@
             background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
             border: 1px solid rgba(255,255,255,0.1);
         }
+
+        /* Animation pour l'adresse du contrat */
+        @keyframes pulse-ca {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+        .animate-ca { animation: pulse-ca 2s infinite ease-in-out; }
     </style>
 </head>
 <body>
@@ -153,10 +160,21 @@
             <h2 class="text-3xl md:text-5xl font-black italic mb-6 tracking-tight uppercase drop-shadow-2xl">
                 <span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span> : "Play free. Collect stars. Burn the supply."
             </h2>
-            <p class="text-gray-100 text-lg md:text-xl mb-10 font-medium max-w-2xl mx-auto text-center">
+            <p class="text-gray-100 text-lg md:text-xl mb-6 font-medium max-w-2xl mx-auto text-center">
                 A free mobile game on Solana. One token. A weekly burn. <br>
                 A community of players and traders working together.
             </p>
+
+            <div class="mb-10 max-w-lg mx-auto">
+                <div class="card-glass px-6 py-4 rounded-2xl border-white/10 shadow-2xl relative overflow-hidden group">
+                    <p class="text-[10px] font-black uppercase text-gray-500 mb-2 tracking-[0.2em]">Official Contract Address</p>
+                    <div class="flex items-center justify-center gap-3">
+                        <span id="ca-address" class="text-astro-blue font-mono text-sm md:text-base font-bold animate-ca">
+                            Launching soon on Pump.fun...
+                        </span>
+                    </div>
+                </div>
+            </div>
             
             <div class="flex flex-col items-center gap-8">
                 <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl justify-center px-4">
@@ -164,7 +182,7 @@
                         <div class="flex items-center justify-between">
                             <div class="text-left">
                                 <p class="text-[10px] font-black uppercase text-astro-blue mb-1">Live Updates</p>
-                                <h4 class="text-xl font-black uppercase italic italic">Join Telegram</h4>
+                                <h4 class="text-xl font-black uppercase italic">Join Telegram</h4>
                             </div>
                             <div class="w-12 h-12 bg-astro-blue rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
                                 <i class="fab fa-telegram text-2xl"></i>
@@ -469,13 +487,10 @@
     <div class="max-w-5xl mx-auto px-6">
         <div class="text-center mb-10">
             <h2 class="text-3xl font-black italic uppercase tracking-tighter">
-                
                 LEADERBOARD: TOP STAR COLLECTORS & TOTAL COLLECTED
             </h2>
             <p class="text-gray-500 text-xs uppercase mt-2 font-bold tracking-widest">
                 Track real-time star collection, view top contributors, and monitor the total stars destined for the burn.
-
-
             </p>
         </div>
 
