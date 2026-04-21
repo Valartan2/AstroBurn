@@ -10,16 +10,17 @@
     <style>
         body { background-color: #040509; color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
         
+        /* Correction Hero Section pour Mobile */
         .hero-bg-section { 
             position: relative;
-            min-height: 100vh;
+            min-height: 100vh; /* Changé de 145vh pour éviter le grand vide blanc sur mobile */
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             background-color: #040509;
-            padding-bottom: 40px;
+            padding-bottom: 50px;
         }
 
         .background-image {
@@ -27,11 +28,11 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 80vh; /* Ajusté pour mobile */
-            background-image: linear-gradient(rgba(4,5,9,0) 60%, rgba(4,5,9,1) 95%), url('image_27.png');
+            height: 100vh;
+            background-image: linear-gradient(rgba(4,5,9,0) 60%, rgba(4,5,9,1) 98%), url('image_27.png');
             background-size: cover;
             background-repeat: no-repeat;
-            background-position: center bottom;
+            background-position: center 80px; 
             z-index: 1;
         }
 
@@ -40,13 +41,13 @@
             z-index: 10;
             text-align: center;
             padding: 0 20px;
-            margin-top: 45vh;
+            margin-top: 45vh; /* Ajusté pour mobile, le texte remonte pour laisser voir l'image */
             width: 100%;
         }
 
-        @media (max-width: 768px) {
-            .hero-content { margin-top: 35vh; }
-            .background-image { height: 65vh; }
+        @media (min-width: 768px) {
+            .hero-content { margin-top: 78vh; }
+            .hero-bg-section { min-height: 145vh; }
         }
 
         .card-glass { 
@@ -71,53 +72,72 @@
             border-radius: 30px;
             overflow: hidden;
             border: 1px solid rgba(255, 157, 0, 0.3);
-            box-shadow: 0 0 50px rgba(255, 157, 0, 0.1);
+            box-shadow: 0 0 50px rgba(255, 157, 0, 0.2);
+            background: #000;
+        }
+
+        .item-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
 
         .rocket-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 12px;
         }
 
         .ui-screenshot {
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1);
             width: 100%;
-            transition: transform 0.3s ease;
         }
 
-        .animate-ca {
-            animation: pulse-ca 2s infinite ease-in-out;
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, #0084ff, #ff9d00, transparent);
+        }
+        @media (min-width: 768px) {
+            .timeline-container::before { left: 50%; margin-left: -1px; }
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         @keyframes pulse-ca {
-            0%, 100% { opacity: 0.7; }
+            0%, 100% { opacity: 0.8; }
             50% { opacity: 1; transform: scale(1.02); }
         }
+        .animate-ca { animation: pulse-ca 2s infinite ease-in-out; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-[100] bg-black/80 backdrop-blur-md border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 h-[70px] flex justify-between items-center">
-            <div class="text-xl font-black tracking-tighter flex items-center gap-2 uppercase">
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 h-[80px] flex items-center">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 w-full flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-black tracking-tighter flex items-center gap-2 uppercase">
                 <span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span>
             </div>
-            
-            <div class="hidden lg:flex gap-8 text-[10px] uppercase font-bold tracking-[0.2em] text-gray-400">
+            <div class="hidden md:flex gap-8 text-xs uppercase font-bold tracking-widest text-gray-400">
                 <a href="#gameplay" class="hover:text-white transition">Gameplay</a>
                 <a href="#items" class="hover:text-white transition">Power-ups</a>
                 <a href="#burn" class="hover:text-white transition">Burn Engine</a>
-                <a href="#roadmap" class="hover:text-white transition">Mission</a>
+                <a href="#roadmap" class="hover:text-white transition">Roadmap</a>
             </div>
-
-            <div class="flex items-center gap-3">
-                <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="hidden sm:flex bg-astro-blue px-5 py-2 rounded-full text-white font-black text-[10px] uppercase tracking-widest transition hover:brightness-110">
-                    <i class="fab fa-telegram-plane mr-2"></i> Join
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="hidden sm:flex bg-astro-blue px-4 md:px-6 py-2 rounded-full text-white font-black text-[10px] md:text-xs uppercase hover:scale-105 transition-transform items-center gap-2">
+                    <i class="fab fa-telegram"></i> Join
                 </a>
-                <a href="play.html" class="bg-astro-orange px-6 py-2.5 rounded-full text-black font-black text-[10px] uppercase tracking-widest shadow-lg shadow-orange-500/20 transition hover:scale-105 active:scale-95">
-                    PLAY NOW
+                <a href="play.html" class="bg-astro-orange px-4 md:px-6 py-2 rounded-full text-black font-black text-[10px] md:text-xs uppercase shadow-lg hover:scale-105 transition-transform">
+                    <i class="fas fa-play mr-1 md:mr-2"></i>Play
                 </a>
             </div>
         </div>
@@ -126,194 +146,205 @@
     <header class="hero-bg-section">
         <div class="background-image"></div>
         <div class="hero-content max-w-4xl px-4">
-            <h2 class="text-3xl md:text-6xl font-black italic mb-6 tracking-tight uppercase leading-[0.9]">
-                <span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span> : <br> "Play free. Collect stars. Burn the supply."
+            <h2 class="text-3xl md:text-5xl font-black italic mb-6 tracking-tight uppercase drop-shadow-2xl">
+                <span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span> : "Play free. Collect stars. Burn the supply."
             </h2>
-            <p class="text-gray-400 text-sm md:text-xl mb-10 max-w-2xl mx-auto font-medium">
+            <p class="text-gray-100 text-base md:text-xl mb-6 font-medium max-w-2xl mx-auto text-center">
                 A free mobile game on Solana. One token. A weekly burn. <br>
                 A community of players and traders working together.
             </p>
 
-            <div class="mb-10 max-w-sm mx-auto">
-                <div class="card-glass px-5 py-4 rounded-2xl border-white/10 shadow-2xl">
-                    <p class="text-[9px] font-black uppercase text-gray-500 mb-2 tracking-[0.2em]">Official Contract Address</p>
-                    <div class="flex items-center justify-center gap-2">
-                        <span id="ca-address" class="text-astro-blue font-mono text-xs md:text-sm font-bold animate-ca lowercase">Launching soon on Pump.fun...</span>
+            <div class="mb-10 max-w-lg mx-auto">
+                <div class="card-glass px-6 py-4 rounded-2xl border-white/10 shadow-2xl relative overflow-hidden group">
+                    <p class="text-[10px] font-black uppercase text-gray-500 mb-2 tracking-[0.2em]">Official Contract Address</p>
+                    <div class="flex items-center justify-center gap-3">
+                        <span id="ca-address" class="text-astro-blue font-mono text-sm md:text-base font-bold animate-ca">
+                            Launching soon on Pump.fun...
+                        </span>
                     </div>
                 </div>
             </div>
             
-            <div class="flex flex-col items-center gap-6">
-                <div class="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-                    <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="flex-1 card-glass p-5 rounded-2xl border-blue-500/20 hover:border-blue-500/50 transition group">
+            <div class="flex flex-col items-center gap-8">
+                <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl justify-center px-4">
+                    <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="flex-1 card-glass p-6 rounded-[2rem] border-blue-500/30 hover:border-blue-500 transition-all group text-left">
                         <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-black uppercase tracking-widest italic">Telegram</span>
-                            <i class="fab fa-telegram text-xl text-astro-blue group-hover:scale-110 transition"></i>
+                            <div>
+                                <p class="text-[10px] font-black uppercase text-astro-blue mb-1">Live Updates</p>
+                                <h4 class="text-xl font-black uppercase italic">Join Telegram</h4>
+                            </div>
+                            <div class="w-12 h-12 bg-astro-blue rounded-2xl flex items-center justify-center text-white"><i class="fab fa-telegram text-2xl"></i></div>
                         </div>
                     </a>
-                    <a href="https://x.com/PlaytoAstroBurn" target="_blank" class="flex-1 card-glass p-5 rounded-2xl border-white/10 hover:border-white/30 transition group">
+                    <a href="https://x.com/PlaytoAstroBurn" target="_blank" class="flex-1 card-glass p-6 rounded-[2rem] border-white/10 hover:border-white/40 transition-all group text-left">
                         <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-black uppercase tracking-widest italic">Twitter / X</span>
-                            <i class="fab fa-x-twitter text-xl group-hover:scale-110 transition"></i>
+                            <div>
+                                <p class="text-[10px] font-black uppercase text-gray-400 mb-1">Follow the Hype</p>
+                                <h4 class="text-xl font-black uppercase italic">Follow on X</h4>
+                            </div>
+                            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-black"><i class="fab fa-x-twitter text-2xl"></i></div>
                         </div>
                     </a>
                 </div>
+                <a href="play.html" class="bg-astro-orange text-black font-black px-12 py-4 rounded-2xl hover:scale-105 transition-all uppercase text-sm shadow-[0_0_30px_rgba(255,157,0,0.4)] flex items-center gap-3">
+                    <i class="fas fa-rocket text-xl"></i> Play Now
+                </a>
             </div>
         </div>
     </header>
 
-    <section id="gameplay" class="py-24 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-6xl font-black mb-12 italic uppercase tracking-tighter">Reach for <span class="astro-orange">Space</span></h2>
-            <div class="video-container">
-                <video class="w-full h-auto block" autoplay loop muted playsinline>
+    <section id="gameplay" class="py-24 px-6 bg-[#040509]">
+        <div class="max-w-7xl mx-auto text-center">
+            <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-sm">In-Game Preview</h3>
+            <h2 class="text-4xl md:text-5xl font-black mb-12 italic uppercase">Reach for <span class="astro-orange">Space</span> Excellence</h2>
+            <div class="video-container mb-12">
+                <video class="w-full h-auto block" autoplay loop muted playsinline preload="auto">
                     <source src="202604181907.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
     </section>
 
-    <section id="items" class="py-20 px-6 border-t border-white/5 bg-white/[0.01]">
+    <section id="items" class="py-24 px-6 border-t border-white/5 bg-black/20">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <div class="card-glass p-8 rounded-3xl text-center border-white/5">
-                    <img src="X2.png" alt="x2" class="w-16 h-16 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                    <h4 class="text-xs font-black uppercase tracking-widest">x2 Multiplier</h4>
+            <div class="text-center mb-16">
+                <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-sm">Maximize Your Score</h3>
+                <h2 class="text-4xl md:text-5xl font-black italic uppercase mb-4">Bonuses & <span class="astro-orange">Power-ups</span></h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="item-card p-8 rounded-3xl text-center">
+                    <img src="X2.png" alt="Multiplier" class="w-16 h-16 mx-auto mb-6 object-contain">
+                    <h4 class="text-xl font-black uppercase mb-3">x2 Multiplier</h4>
+                    <p class="text-gray-400 text-sm">Instantly doubles your star collection during the game.</p>
                 </div>
-                <div class="card-glass p-8 rounded-3xl text-center border-white/5">
-                    <img src="magnet.png" alt="magnet" class="w-16 h-16 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                    <h4 class="text-xs font-black uppercase tracking-widest">Magnet</h4>
+                <div class="item-card p-8 rounded-3xl text-center">
+                    <img src="magnet.png" alt="Magnet" class="w-16 h-16 mx-auto mb-6 object-contain">
+                    <h4 class="text-xl font-black uppercase mb-3">Magnet</h4>
+                    <p class="text-gray-400 text-sm">Magnetically attracts all stars towards your rocket.</p>
                 </div>
-                <div class="card-glass p-8 rounded-3xl text-center border-white/5">
-                    <img src="shield.png" alt="shield" class="w-16 h-16 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                    <h4 class="text-xs font-black uppercase tracking-widest">Nova Shield</h4>
+                <div class="item-card p-8 rounded-3xl text-center">
+                    <img src="shield.png" alt="Shield" class="w-16 h-16 mx-auto mb-6 object-contain">
+                    <h4 class="text-xl font-black uppercase mb-3">Nova Shield</h4>
+                    <p class="text-gray-400 text-sm">Grants a shield and explodes nearby meteorites.</p>
                 </div>
-                <div class="card-glass p-8 rounded-3xl text-center border-white/5">
-                    <img src="star.png" alt="star" class="w-16 h-16 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                    <h4 class="text-xs font-black uppercase tracking-widest">Stars</h4>
+                <div class="item-card p-8 rounded-3xl text-center">
+                    <img src="star.png" alt="Stars" class="w-16 h-16 mx-auto mb-6 object-contain">
+                    <h4 class="text-xl font-black uppercase mb-3">Stars</h4>
+                    <p class="text-gray-400 text-sm text-xs">Small: <span class="text-white font-bold">+1 star</span><br>Large: <span class="astro-orange font-bold">+5 stars</span></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="concept" class="py-24 px-6 max-w-5xl mx-auto border-t border-white/5 text-center">
-        <h2 class="text-3xl font-black italic uppercase mb-12 tracking-tight">The Skin <span class="astro-orange">Fleet</span></h2>
-        <div class="rocket-grid p-8 card-glass rounded-[40px] border-white/5 shadow-inner">
-            <img src="rocket2.png"><img src="rocket3.png"><img src="rocket4.png"><img src="rocket5.png"><img src="rocket6.png"><img src="rocket7.png"><img src="rocket8.png"><img src="rocket9.png"><img src="rocket10.png"><img src="rocket11.png"><img src="rocket12.png"><img src="rocket13.png"><img src="rocket14.png"><img src="rocket15.png"><img src="rocket16.png"><img src="rocket17.png"><img src="rocket18.png"><img src="rocket19.png"><img src="rocket20.png"><img src="rocket21.png"><img src="rocket22.png"><img src="rocket23.png"><img src="rocket24.png"><img src="rocket25.png"><img src="rocket26.png"><img src="rocket27.png">
+    <section id="concept" class="py-24 px-6 max-w-5xl mx-auto border-t border-white/10 text-center">
+        <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-sm">The Collection</h3>
+        <h2 class="text-4xl md:text-5xl font-black italic uppercase mb-8">Skin <span class="astro-orange">Fleet</span></h2>
+        <p class="text-gray-300 text-lg mb-12">Unlock dozens of unique rockets as you climb the ranks.</p>
+        <div class="rocket-grid p-8 card-glass rounded-3xl">
+            <img src="rocket2.png" alt="R2"><img src="rocket3.png" alt="R3"><img src="rocket4.png" alt="R4"><img src="rocket5.png" alt="R5"><img src="rocket6.png" alt="R6"><img src="rocket7.png" alt="R7"><img src="rocket8.png" alt="R8"><img src="rocket9.png" alt="R9"><img src="rocket10.png" alt="R10"><img src="rocket11.png" alt="R11"><img src="rocket12.png" alt="R12"><img src="rocket13.png" alt="R13"><img src="rocket14.png" alt="R14"><img src="rocket15.png" alt="R15"><img src="rocket16.png" alt="R16"><img src="rocket17.png" alt="R17"><img src="rocket18.png" alt="R18"><img src="rocket19.png" alt="R19"><img src="rocket20.png" alt="R20"><img src="rocket21.png" alt="R21"><img src="rocket22.png" alt="R22"><img src="rocket23.png" alt="R23"><img src="rocket24.png" alt="R24"><img src="rocket25.png" alt="R25"><img src="rocket26.png" alt="R26"><img src="rocket27.png" alt="R27">
         </div>
     </section>
 
-    <section id="ui" class="py-24 px-6 bg-white/[0.01] border-t border-white/5">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-2xl font-black italic uppercase text-center mb-12 tracking-widest opacity-50">Interface Gallery</h2>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <img src="Capture d’écran 2026-04-18 à 15.21.33.png" class="ui-screenshot">
-                <img src="Capture d’écran 2026-04-18 à 15.21.01.png" class="ui-screenshot">
-                <img src="Capture d’écran 2026-04-18 à 14.27.16.png" class="ui-screenshot">
-                <img src="Capture d’écran 2026-04-18 à 15.22.18.png" class="ui-screenshot">
-                <img src="Capture d’écran 2026-04-18 à 15.21.54.png" class="ui-screenshot">
+    <section id="burn" class="py-24 bg-[#040509] border-y border-white/5 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-xs">Circular Economy</h3>
+                <h2 class="text-4xl font-black italic uppercase mb-8 tracking-tighter">Burn <span class="astro-orange">Engine</span></h2>
+                <h3 class="text-lg md:text-xl font-black italic uppercase mb-8">Welcome to <span class="astro-orange">Play to Burn</span>.</h3>
+                
+                <div class="inline-flex flex-col md:flex-row items-center gap-4 bg-white/[0.03] border border-white/10 p-2 md:p-1 rounded-[2rem] shadow-2xl mb-10">
+                    <div class="px-8 py-4"><span class="text-xl md:text-3xl font-black italic text-white uppercase">REDUCE SUPPLY :</span></div>
+                    <div class="flex items-center gap-4 bg-black/60 px-6 md:px-10 py-6 rounded-[1.8rem] border border-white/5 shadow-inner">
+                        <div class="text-center"><span class="block text-3xl md:text-5xl font-black text-astro-orange text-glow-orange">1</span><span class="block text-[10px] font-black uppercase text-astro-orange/60">STAR⭐</span></div>
+                        <span class="text-2xl font-bold text-gray-600">=</span>
+                        <div class="text-center"><span class="block text-3xl md:text-5xl font-black text-astro-blue text-glow-blue">1</span><span class="block text-[10px] font-black uppercase text-astro-blue/60">ASTRO Token</span></div>
+                    </div>
+                </div>
+
+                <div class="max-w-5xl mx-auto mb-10">
+                    <div class="flex flex-row items-center justify-between gap-2 md:gap-4 bg-white/[0.02] border border-white/5 p-4 md:p-6 rounded-[2rem]">
+                        <div class="flex-1 text-center"><i class="fas fa-gamepad text-astro-orange text-sm md:text-xl mb-2"></i><p class="text-[10px] md:text-[13px] font-black uppercase text-white leading-tight">More Players</p></div>
+                        <div class="text-gray-700"><i class="fas fa-chevron-right text-xs md:text-base"></i></div>
+                        <div class="flex-1 text-center"><i class="fas fa-chart-line text-astro-blue text-sm md:text-xl mb-2"></i><p class="text-[10px] md:text-[13px] font-black uppercase text-white leading-tight">Trading Volume</p></div>
+                        <div class="text-gray-700"><i class="fas fa-chevron-right text-xs md:text-base"></i></div>
+                        <div class="flex-1 text-center"><i class="fas fa-fire text-astro-orange text-sm md:text-xl mb-2"></i><p class="text-[10px] md:text-[13px] font-black uppercase text-astro-orange leading-tight">Supply Burn</p></div>
+                    </div>
+                </div>
+
+                <p class="text-gray-400 text-[11px] md:text-sm font-medium max-w-2xl mx-auto mb-10 italic">"A synergetic ecosystem: <span class="text-white">Traders</span> fuel the burn engine, <span class="text-white">Players</span> define the burn scale."</p>
+
+                <div class="max-w-2xl mx-auto bg-white/5 border border-white/10 rounded-2xl p-4 mb-8">
+                    <p class="text-[9px] uppercase font-bold text-gray-500 mb-3 tracking-widest">Example :</p>
+                    <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-[10px] font-black italic text-gray-300">
+                        <span>VOLUME: $100,000</span><span class="text-gray-700 hidden md:inline">|</span><span>PUMPFUN FEES: 0.95%</span><span class="text-gray-700 hidden md:inline">|</span><span>ASTRO PRICE: $0.005</span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-16 text-left">
+                    <div class="stat-card p-8 rounded-[30px] border-orange-500/10">
+                        <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center text-black"><i class="fas fa-fire-alt"></i></div><h4 class="text-xl font-black uppercase italic text-orange-500">60% Burn</h4></div>
+                        <div class="bg-black/40 p-4 rounded-xl border border-white/5"><p class="text-xl font-black text-white italic">$570 <span class="text-[9px] text-orange-500 font-bold uppercase ml-2 tracking-widest">Dedicated to Burn (114,000 ⭐)</span></p></div>
+                    </div>
+                    <div class="stat-card p-8 rounded-[30px] border-blue-500/10">
+                        <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center text-black"><i class="fas fa-users text-sm"></i></div><h4 class="text-xl font-black uppercase italic text-blue-500">40% Team</h4></div>
+                        <div class="bg-black/40 p-4 rounded-xl border border-white/5"><p class="text-xl font-black text-white italic">$380 <span class="text-[9px] text-blue-500 font-bold uppercase ml-2 tracking-widest">Team & Marketing</span></p></div>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-8 mb-16 text-left">
+                    <div class="card-glass p-8 rounded-[35px] border-white/5">
+                        <h5 class="text-xl font-black uppercase italic mb-2">Scenario A: <span class="text-astro-blue">Surplus</span></h5>
+                        <p class="text-xs text-gray-400 mb-6">The burn budget ($570) is higher than player effort.</p>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5 flex justify-between items-center italic">
+                            <span class="text-xl font-black text-white">64,000 <span class="text-[9px] opacity-50 uppercase not-italic">Stars</span></span>
+                            <span class="text-xl font-black text-astro-blue">$320 <span class="text-[9px] opacity-50 uppercase not-italic">Reserve</span></span>
+                        </div>
+                    </div>
+                    <div class="card-glass p-8 rounded-[35px] border-white/5">
+                        <h5 class="text-xl font-black uppercase italic mb-2">Scenario B: <span class="text-orange-500">Debt</span></h5>
+                        <p class="text-xs text-gray-400 mb-6">Activity exceeds budget. Burn entire budget.</p>
+                        <div class="bg-black/30 p-4 rounded-2xl border border-white/5 flex justify-between items-center italic">
+                            <span class="text-xl font-black text-white">36,000 <span class="text-[9px] opacity-50 uppercase not-italic">Stars</span></span>
+                            <span class="text-xl font-black text-orange-500">-$180 <span class="text-[9px] opacity-50 uppercase not-italic">To Burn</span></span>
+                        </div> 
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="burn" class="py-32 bg-[#040509] border-y border-white/5 relative overflow-hidden">
-        <div class="max-w-6xl mx-auto px-6 relative z-10 text-center">
-            <h2 class="text-4xl md:text-7xl font-black italic uppercase mb-12 tracking-tighter leading-none">Synergetic <br> <span class="astro-orange">Burn Engine</span></h2>
-            
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-16">
-                <div class="bg-white/[0.02] border border-white/10 p-10 rounded-[40px] w-full max-w-sm">
-                    <span class="block text-6xl md:text-8xl font-black text-astro-orange text-glow-orange mb-4">1</span>
-                    <span class="block text-xs font-black uppercase tracking-[0.3em] text-gray-500">STAR COLLECTED ⭐</span>
-                </div>
-                <div class="text-4xl text-gray-700 font-black hidden md:block">=</div>
-                <div class="bg-white/[0.02] border border-white/10 p-10 rounded-[40px] w-full max-w-sm">
-                    <span class="block text-6xl md:text-8xl font-black text-astro-blue text-glow-blue mb-4">1</span>
-                    <span class="block text-xs font-black uppercase tracking-[0.3em] text-gray-500">$ASTRO BURNED 🔥</span>
-                </div>
-            </div>
-
-            <p class="text-gray-400 text-sm md:text-lg font-medium max-w-3xl mx-auto italic leading-relaxed mb-16 px-4">
-                "In AstroBurn, players and holders are one. Every star grabbed in-game triggers a real-time burn event. Traders fuel the pool, players reduce the supply. The faster you fly, the harder we burn."
-            </p>
-
-            <div class="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-                <div class="card-glass p-8 rounded-3xl border-orange-500/20">
-                    <h4 class="text-xl font-black uppercase italic text-orange-500 mb-3">60% Player Burn</h4>
-                    <p class="text-xs text-gray-400 font-medium leading-relaxed">Directly proportional to global star collection. A mechanic that turns skill into scarcity.</p>
-                </div>
-                <div class="card-glass p-8 rounded-3xl border-blue-500/20">
-                    <h4 class="text-xl font-black uppercase italic text-blue-500 mb-3">40% Eco-Growth</h4>
-                    <p class="text-xs text-gray-400 font-medium leading-relaxed">Reserved for continuous development, server maintenance, and aggressive marketing.</p>
-                </div>
+    <section id="leaderboard" class="py-20 bg-[#040509]">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-black italic uppercase mb-8">LEADERBOARD: TOP STAR COLLECTORS</h2>
+            <div class="rounded-[2rem] overflow-hidden border border-white/10 card-glass h-[500px]">
+                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTaeuRmX1KJpGINbCgXEh4n9JeE2U6u9LTep2inNd26NL_1VsCNVLkzFn_-jg6lgP3kiEinMU0x4k6-/pubhtml?widget=true&amp;headers=false&amp;chrome=false" class="w-full h-full border-none"></iframe>
             </div>
         </div>
     </section>
 
-    <section id="roadmap" class="py-32 px-6 max-w-5xl mx-auto">
-        <h2 class="text-5xl md:text-8xl font-black mb-24 italic text-center uppercase tracking-tighter">Mission <span class="astro-blue">Roadmap</span></h2>
-        
-        <div class="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/10 before:to-transparent">
+    <section id="roadmap" class="py-24 px-6 max-w-5xl mx-auto border-t border-white/10">
+        <h2 class="text-4xl font-black mb-20 italic text-center uppercase">Mission <span class="astro-blue">Roadmap</span></h2>
+        <div class="timeline-container relative space-y-16">
             <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#040509] md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10"><i class="fas fa-rocket text-astro-blue"></i></div>
-                <div class="w-[calc(100%-4rem)] md:w-[45%] card-glass p-6 rounded-3xl border-blue-500/40">
-                    <h4 class="font-black uppercase mb-2 text-astro-blue">Phase 1 — Ignition</h4>
-                    <ul class="text-gray-400 text-sm space-y-1">
-                        <li>• Token Stealth Launch (Pump.fun)</li>
-                        <li>• Web & Game Public Release</li>
-                        <li>• Community Base Building</li>
-                        <li>• Initial Twitter/Telegram Push</li>
-                    </ul>
+                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-black text-blue-500 z-10 md:order-1"><i class="fas fa-check"></i></div>
+                <div class="w-[calc(100%-4rem)] md:w-[45%] card-glass p-6 rounded-3xl border-blue-500/30">
+                    <h4 class="font-black uppercase text-blue-500 mb-2">Phase 0 — Preparation</h4>
+                    <ul class="text-gray-400 text-sm"><li>• Browser Game & Wallet Integration</li><li>• Burn Engine Operational</li></ul>
                 </div>
             </div>
-
             <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#040509] md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10"><i class="fas fa-fire text-astro-orange"></i></div>
-                <div class="w-[calc(100%-4rem)] md:w-[45%] card-glass p-6 rounded-3xl border-orange-500/40">
-                    <h4 class="font-black uppercase mb-2 text-astro-orange">Phase 2 — Thermal Blast</h4>
-                    <ul class="text-gray-400 text-sm space-y-1">
-                        <li>• Activations of Daily Burns</li>
-                        <li>• DexTools/DexScreener Trending</li>
-                        <li>• First KOLs Partnerships</li>
-                        <li>• Community Burn Competitions</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#040509] md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10"><i class="fas fa-crown text-astro-blue"></i></div>
-                <div class="w-[calc(100%-4rem)] md:w-[45%] card-glass p-6 rounded-3xl border-blue-500/40">
-                    <h4 class="font-black uppercase mb-2 text-astro-blue">Phase 3 — Orbit Peak</h4>
-                    <ul class="text-gray-400 text-sm space-y-1">
-                        <li>• CEX Listings Applications</li>
-                        <li>• Global Leaderboard Rewards</li>
-                        <li>• Exclusive NFT Skins Drop</li>
-                        <li>• Major Influencer Campaign</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#040509] md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10"><i class="fas fa-plus-circle"></i></div>
-                <div class="w-[calc(100%-4rem)] md:w-[45%] card-glass p-6 rounded-3xl border-orange-500/40">
-                    <h4 class="font-black uppercase mb-2 text-astro-orange">Phase 4 — Expansion</h4>
-                    <ul class="text-gray-400 text-sm space-y-1">
-                        <li>• Mobile App Development</li>
-                        <li>• Global Marketing Push</li>
-                        <li>• Graphic Upgrades & New Modes</li>
-                        <li>• New Skins, Tiers & In-game Bonuses</li>
-                    </ul>
+                <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-black text-orange-500 z-10 md:order-1"><i class="fas fa-rocket"></i></div>
+                <div class="w-[calc(100%-4rem)] md:w-[45%] card-glass p-6 rounded-3xl border-orange-500/30">
+                    <h4 class="font-black uppercase text-orange-500 mb-2">Phase 1 — Launch</h4>
+                    <ul class="text-gray-400 text-sm"><li>• Pump.fun Listing</li><li>• Public Game Release</li></ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-24 px-6 text-center border-t border-white/5 bg-black">
-        <div class="text-3xl font-black italic mb-8 uppercase tracking-tighter"><span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span></div>
-        <div class="flex justify-center gap-6 mb-8 text-2xl text-gray-500">
-            <a href="https://x.com/PlaytoAstroBurn" target="_blank" class="hover:text-white transition"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="hover:text-white transition"><i class="fab fa-telegram"></i></a>
-        </div>
-        <p class="text-[10px] text-gray-700 uppercase tracking-[0.4em] font-bold">$ASTRO is a memecoin on Solana. Play for fun. © 2026</p>
+    <footer class="py-16 px-6 text-center border-t border-white/5 bg-black">
+        <div class="text-3xl font-black italic mb-6 uppercase tracking-tighter"><span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span></div>
+        <p class="text-[10px] text-gray-600 uppercase font-bold">$ASTRO is a memecoin on Solana. © 2026</p>
     </footer>
 
 </body>
