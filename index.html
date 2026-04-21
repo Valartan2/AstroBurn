@@ -12,7 +12,7 @@
         
         .hero-bg-section { 
             position: relative;
-            min-height: 145vh;
+            min-height: 100vh; /* Réduit pour mobile */
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -22,258 +22,484 @@
             background-color: #040509;
         }
 
+        @media (min-width: 768px) {
+            .hero-bg-section { min-height: 145vh; }
+        }
+
         .background-image {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
-            background-image: linear-gradient(rgba(4,5,9,0) 60%, rgba(4,5,9,1) 100%), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000');
+            height: 80vh; /* Plus court sur mobile pour voir le texte */
+            background-image: linear-gradient(rgba(4,5,9,0) 50%, rgba(4,5,9,1) 95%), url('image_27.png');
             background-size: cover;
-            background-position: center;
+            background-repeat: no-repeat;
+            background-position: center 60px; 
             z-index: 1;
-            opacity: 0.4;
         }
 
+        @media (min-width: 768px) {
+            .background-image { height: 100vh; background-position: center 80px; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: 55vh; /* Remonté pour mobile */
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content { margin-top: 78vh; }
+        }
+
+        .card-glass { 
+            background: rgba(4, 5, 9, 0.75); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        
         .astro-blue { color: #0084ff; }
         .astro-orange { color: #ff9d00; }
-        .bg-astro-blue { background-color: #0084ff; }
         .bg-astro-orange { background-color: #ff9d00; }
+        .bg-astro-blue { background-color: #0084ff; }
+        
+        .text-glow-blue { text-shadow: 0 0 15px rgba(0, 132, 255, 0.5); }
+        .text-glow-orange { text-shadow: 0 0 15px rgba(255, 157, 0, 0.5); }
 
-        .card-glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-
-        .rocket-animation {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .stars-container {
-            position: absolute;
+        .video-container {
+            position: relative;
             width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 20px; /* Plus petit radius sur mobile */
+            overflow: hidden;
+            border: 1px solid rgba(255, 157, 0, 0.3);
+            box-shadow: 0 0 50px rgba(255, 157, 0, 0.2);
+            background: #000;
+        }
+
+        .item-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .item-card:hover {
+            background: rgba(255, 157, 0, 0.05);
+            border-color: rgba(255, 157, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .rocket-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); /* Plus dense sur mobile */
+            gap: 8px;
+        }
+        @media (min-width: 768px) {
+            .rocket-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 12px; }
+        }
+        
+        .rocket-grid img {
+            width: 100%;
+            height: 45px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            transition: transform 0.2s;
+        }
+        @media (min-width: 768px) {
+            .rocket-grid img { height: 60px; }
+        }
+
+        .ui-screenshot {
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+            width: 100%;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15px; /* Aligné pour mobile */
             height: 100%;
-            pointer-events: none;
+            width: 2px;
+            background: linear-gradient(to bottom, #0084ff, #ff9d00, transparent);
+        }
+        @media (min-width: 768px) {
+            .timeline-container::before { left: 50%; margin-left: -1px; }
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @keyframes pulse-ca {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+        .animate-ca { animation: pulse-ca 2s infinite ease-in-out; }
+        
+        /* Fix for Horizontal Scroll on mobile */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-50 px-6 py-4 border-b border-white/5 bg-black/50 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-black italic tracking-tighter uppercase leading-none">
-                <span class="astro-blue text-3xl">ASTRO</span><br>
-                <span class="astro-orange">BURN</span>
+    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 h-[70px] md:h-[80px] flex items-center">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 w-full flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-black tracking-tighter flex items-center gap-2 uppercase">
+                <span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span>
             </div>
-            <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
-                <a href="#howtoplay" class="hover:text-white transition">How to Play</a>
-                <a href="#pool" class="hover:text-white transition">SOL Pool</a>
-                <a href="#skins" class="hover:text-white transition">Skins</a>
-                <a href="#tokenomics" class="hover:text-white transition">Tokenomics</a>
+            <div class="hidden md:flex gap-8 text-xs uppercase font-bold tracking-widest text-gray-400">
+                <a href="#gameplay" class="hover:text-white transition">Gameplay</a>
+                <a href="#items" class="hover:text-white transition">Power-ups</a>
+                <a href="#concept" class="hover:text-white transition">Skins</a>
+                <a href="#ranks" class="hover:text-white transition">Ranks</a>
+                <a href="#ui" class="hover:text-white transition">Interface</a>
+                <a href="#burn" class="hover:text-white transition">SOL Pool</a>
                 <a href="#roadmap" class="hover:text-white transition">Roadmap</a>
             </div>
-            <button class="bg-white text-black px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-astro-orange hover:text-white transition">Play Game</button>
+            <div class="flex items-center gap-2 md:gap-4">
+                <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="bg-astro-blue px-3 md:px-6 py-2 rounded-full text-white font-black text-[10px] md:text-xs uppercase hover:scale-105 transition-transform flex items-center gap-2">
+                    <i class="fab fa-telegram text-sm"></i> <span class="hidden sm:inline">Join Telegram</span>
+                </a>
+                <a href="play.html" class="bg-astro-orange px-3 md:px-6 py-2 rounded-full text-black font-black text-[10px] md:text-xs uppercase shadow-[0_0_20px_rgba(255,157,0,0.4)] hover:scale-105 transition-transform">
+                    <i class="fas fa-play mr-1 md:mr-2"></i>Play
+                </a>
+            </div>
         </div>
     </nav>
 
-    <section class="hero-bg-section pt-40 px-6 text-center">
+    <header class="hero-bg-section">
         <div class="background-image"></div>
-        
-        <div class="relative z-10 max-w-4xl mx-auto">
-            <div class="inline-block bg-astro-orange/20 text-astro-orange border border-astro-orange/30 px-6 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-12">
-                Play to Earn Solana — Deflationary Ecosystem
-            </div>
-            
-            <h1 class="text-[clamp(3rem,15vw,8rem)] font-black italic uppercase leading-[0.8] mb-12 tracking-tighter">
-                PLAY FREE.<br>EARN <span class="astro-orange font-black">SOL.</span>
-            </h1>
-
-            <p class="text-gray-400 text-lg md:text-xl font-medium mb-12 italic max-w-2xl mx-auto leading-relaxed">
-                Chaque transaction trade brûle le supply. <br> Chaque étoile collectée vous donne une part de la pool de récompenses en SOL.
+        <div class="hero-content max-w-4xl px-4">
+            <h2 class="text-2xl md:text-5xl font-black italic mb-4 md:mb-6 tracking-tight uppercase drop-shadow-2xl">
+                <span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span> : "Play free. Collect stars. Earn Solana."
+            </h2>
+            <p class="text-gray-100 text-sm md:text-xl mb-6 font-medium max-w-2xl mx-auto text-center">
+                A free mobile game on Solana. One token. A huge SOL Reward Pool. <br class="hidden md:block">
+                A community of players and traders working together.
             </p>
 
-            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
-                <button class="bg-astro-orange text-black px-12 py-5 rounded-2xl font-black uppercase italic text-lg hover:scale-105 transition-transform shadow-[0_20px_50px_rgba(255,157,0,0.3)]">
-                    Lancer le Jeu
-                </button>
-                <button class="card-glass border-white/10 text-white px-12 py-5 rounded-2xl font-black uppercase italic text-lg hover:bg-white/10 transition">
-                    Buy $ASTRO
-                </button>
-            </div>
-        </div>
-
-        <div class="relative z-10 mt-20 rocket-animation">
-            <img src="https://cdn-icons-png.flaticon.com/512/1033/1033011.png" alt="Rocket" class="w-48 h-48 md:w-80 md:h-80 object-contain brightness-125 saturate-150">
-        </div>
-    </section>
-
-    <section id="howtoplay" class="py-32 px-6 max-w-7xl mx-auto relative z-20">
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="card-glass p-10 rounded-[3rem] border-white/5 relative overflow-hidden group">
-                <div class="text-astro-blue text-5xl mb-8 group-hover:scale-110 transition-transform"><i class="fas fa-gamepad"></i></div>
-                <h3 class="text-2xl font-black uppercase italic mb-4">1. Jouez</h3>
-                <p class="text-gray-400 text-sm italic leading-relaxed font-medium">Jouez gratuitement au mini-jeu. Collectez le plus d'étoiles possible pour augmenter votre part hebdomadaire.</p>
-            </div>
-            <div class="card-glass p-10 rounded-[3rem] border-white/5 relative overflow-hidden group">
-                <div class="text-astro-orange text-5xl mb-8 group-hover:scale-110 transition-transform"><i class="fas fa-fire"></i></div>
-                <h3 class="text-2xl font-black uppercase italic mb-4">2. Brûlez</h3>
-                <p class="text-gray-400 text-sm italic leading-relaxed font-medium">60% des frais de trading sont utilisés pour racheter et brûler des tokens $ASTRO de façon permanente.</p>
-            </div>
-            <div class="card-glass p-10 rounded-[3rem] border-astro-orange/30 relative overflow-hidden group">
-                <div class="text-white text-5xl mb-8 group-hover:scale-110 transition-transform"><i class="fas fa-wallet"></i></div>
-                <h3 class="text-2xl font-black uppercase italic mb-4 text-astro-orange">3. Gagnez</h3>
-                <p class="text-gray-400 text-sm italic leading-relaxed font-medium">40% des frais sont accumulés dans la SOL-POOL. Recevez du SOL directement selon votre score.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="pool" class="py-32 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">
-        <div class="max-w-6xl mx-auto relative z-10">
-            <div class="text-center mb-20">
-                <h2 class="text-5xl md:text-7xl font-black italic uppercase mb-6 tracking-tighter">THE <span class="astro-orange">SOL-POOL</span></h2>
-                <p class="text-gray-400 text-xl italic font-medium">Plus de dette, plus de calculs compliqués. Juste du Solana.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <div class="card-glass p-12 rounded-[4rem] border-astro-orange/20">
-                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-astro-orange mb-4">Solana Pool Actuelle</p>
-                    <div class="text-7xl font-black italic">14.50 <span class="text-2xl text-gray-600">SOL</span></div>
-                    <div class="mt-8 h-2 w-full bg-white/5 rounded-full"><div class="h-full bg-astro-orange rounded-full" style="width: 70%"></div></div>
-                </div>
-                <div class="card-glass p-12 rounded-[4rem] border-astro-blue/20">
-                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-astro-blue mb-4">Étoiles Collectées (Global)</p>
-                    <div class="text-7xl font-black italic">1.2M <span class="text-2xl text-gray-600">⭐</span></div>
-                    <div class="mt-8 h-2 w-full bg-white/5 rounded-full"><div class="h-full bg-astro-blue rounded-full" style="width: 45%"></div></div>
-                </div>
-            </div>
-
-            <div class="card-glass p-10 rounded-[3rem] border-white/10 text-center max-w-4xl mx-auto">
-                <h3 class="text-sm font-black uppercase tracking-widest text-gray-500 mb-8">Votre Part des Récompenses</h3>
-                <div class="flex flex-col md:flex-row items-center justify-around gap-8">
-                    <div>
-                        <span class="text-[10px] font-black uppercase text-gray-500">Tes Stars</span>
-                        <div class="text-3xl font-black italic">50,000</div>
-                    </div>
-                    <div class="text-4xl font-black text-gray-800 italic">÷</div>
-                    <div>
-                        <span class="text-[10px] font-black uppercase text-gray-500">Total Stars</span>
-                        <div class="text-3xl font-black italic">1,000,000</div>
-                    </div>
-                    <div class="text-4xl font-black text-astro-orange italic">=</div>
-                    <div class="bg-astro-orange text-black px-10 py-4 rounded-3xl">
-                        <span class="text-[10px] font-black uppercase opacity-70 italic">Ta Part</span>
-                        <div class="text-4xl font-black italic">5.00%</div>
+            <div class="mb-8 md:mb-10 max-w-lg mx-auto">
+                <div class="card-glass px-4 md:px-6 py-3 md:py-4 rounded-2xl border-white/10 shadow-2xl relative overflow-hidden group">
+                    <p class="text-[9px] md:text-[10px] font-black uppercase text-gray-500 mb-1 md:mb-2 tracking-[0.2em]">Official Contract Address</p>
+                    <div class="flex items-center justify-center gap-3">
+                        <span id="ca-address" class="text-astro-blue font-mono text-xs md:text-base font-bold animate-ca">
+                            Launching soon on Pump.fun...
+                        </span>
                     </div>
                 </div>
-                <p class="mt-10 text-gray-500 text-xs italic uppercase font-bold">Si la pool contient 10 SOL, tu reçois automatiquement 0.50 SOL à la fin de l'Epoch.</p>
+            </div>
+            
+            <div class="flex flex-col items-center gap-6 md:gap-8">
+                <div class="flex flex-col sm:flex-row gap-4 w-full max-w-2xl justify-center px-0">
+                    <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="flex-1 card-glass p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border-blue-500/30 hover:border-blue-500 hover:bg-blue-500/10 transition-all group">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <p class="text-[9px] md:text-[10px] font-black uppercase text-astro-blue mb-1">Live Updates</p>
+                                <h4 class="text-lg md:text-xl font-black uppercase italic">Join Telegram</h4>
+                            </div>
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-astro-blue rounded-xl md:rounded-2xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform">
+                                <i class="fab fa-telegram text-xl md:text-2xl"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://x.com/PlaytoAstroBurn" target="_blank" class="flex-1 card-glass p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border-white/10 hover:border-white/40 hover:bg-white/5 transition-all group">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <p class="text-[9px] md:text-[10px] font-black uppercase text-gray-400 mb-1">Follow the Hype</p>
+                                <h4 class="text-lg md:text-xl font-black uppercase italic">Follow on X</h4>
+                            </div>
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center text-black shadow-lg group-hover:scale-110 transition-transform">
+                                <i class="fab fa-x-twitter text-xl md:text-2xl"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <a href="play.html" class="bg-astro-orange text-black font-black px-8 md:px-12 py-3 md:py-4 rounded-xl md:rounded-2xl hover:scale-105 transition-all uppercase text-xs md:text-sm shadow-[0_0_30px_rgba(255,157,0,0.4)] flex items-center gap-3">
+                    <i class="fas fa-rocket text-lg md:text-xl"></i> Play Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="gameplay" class="py-16 md:py-24 px-6 bg-[#040509]">
+        <div class="max-w-7xl mx-auto text-center">
+            <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-xs md:text-sm">In-Game Preview</h3>
+            <h2 class="text-3xl md:text-5xl font-black mb-8 md:mb-12 italic uppercase">Reach for <span class="astro-orange">Space</span> Excellence</h2>
+            <div class="video-container mb-8 md:mb-12">
+                <video class="w-full h-auto block" autoplay loop muted playsinline preload="auto">
+                    <source src="202604181907.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
     </section>
 
-    <section id="skins" class="py-32 px-6">
+    <section id="items" class="py-16 md:py-24 px-6 border-t border-white/5 bg-black/20">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-5xl md:text-7xl font-black italic uppercase mb-20 text-center tracking-tighter">ROCKET <span class="astro-blue">SKINS</span></h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="card-glass p-6 rounded-[3rem] group">
-                    <div class="h-80 card-glass rounded-[2.5rem] mb-6 flex items-center justify-center bg-gradient-to-b from-white/5 to-transparent">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1033/1033011.png" class="w-40 h-40 group-hover:scale-110 transition-transform duration-500">
-                    </div>
-                    <h4 class="text-2xl font-black italic uppercase mb-2">Original Astro</h4>
-                    <p class="text-gray-500 text-sm mb-4 italic">Skin par défaut pour tous les joueurs.</p>
-                    <span class="bg-white/10 text-[10px] font-black uppercase px-4 py-1 rounded-full italic">Unlocked</span>
+            <div class="text-center mb-12 md:mb-16">
+                <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-xs md:text-sm">Maximize Your Score</h3>
+                <h2 class="text-3xl md:text-5xl font-black italic uppercase mb-4">Bonuses & <span class="astro-orange">Power-ups</span></h2>
+                <p class="text-gray-400 text-sm md:text-lg font-medium italic uppercase tracking-wide">Use bonuses to boost your collection efficiency.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="item-card p-6 md:p-8 rounded-2xl md:rounded-3xl text-center">
+                    <img src="X2.png" alt="Multiplier" class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:6 object-contain">
+                    <h4 class="text-base md:text-xl font-black uppercase mb-2 md:3">x2 Multiplier</h4>
+                    <p class="text-gray-400 text-[10px] md:text-sm">Instantly doubles your star collection during the game.</p>
                 </div>
-                <div class="card-glass p-6 rounded-[3rem] group border-astro-blue/20">
-                    <div class="h-80 card-glass rounded-[2.5rem] mb-6 flex items-center justify-center bg-gradient-to-b from-astro-blue/10 to-transparent">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1033/1033011.png" class="w-40 h-40 brightness-125 saturate-150 rotate-12 group-hover:rotate-0 transition-transform duration-500">
-                    </div>
-                    <h4 class="text-2xl font-black italic uppercase mb-2 text-astro-blue">Nebula Wings</h4>
-                    <p class="text-gray-500 text-sm mb-4 italic">Exclusif pour les stakers de $ASTRO.</p>
-                    <span class="bg-astro-blue text-white text-[10px] font-black uppercase px-4 py-1 rounded-full italic">Stakers Only</span>
+                <div class="item-card p-6 md:p-8 rounded-2xl md:rounded-3xl text-center">
+                    <img src="magnet.png" alt="Magnet" class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:6 object-contain">
+                    <h4 class="text-base md:text-xl font-black uppercase mb-2 md:3">Magnet</h4>
+                    <p class="text-gray-400 text-[10px] md:text-sm">Magnetically attracts all stars towards your rocket.</p>
                 </div>
-                <div class="card-glass p-6 rounded-[3rem] group border-astro-orange/20 shadow-[0_0_50px_rgba(255,157,0,0.1)]">
-                    <div class="h-80 card-glass rounded-[2.5rem] mb-6 flex items-center justify-center bg-gradient-to-b from-astro-orange/10 to-transparent">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1033/1033011.png" class="w-40 h-40 hue-rotate-60 brightness-150 group-hover:scale-125 transition-transform duration-500">
-                    </div>
-                    <h4 class="text-2xl font-black italic uppercase mb-2 text-astro-orange">Solar Flare</h4>
-                    <p class="text-gray-500 text-sm mb-4 italic">Récompense limitée Top 10 Mondial.</p>
-                    <span class="bg-astro-orange text-black text-[10px] font-black uppercase px-4 py-1 rounded-full italic">Limited Edition</span>
+                <div class="item-card p-6 md:p-8 rounded-2xl md:rounded-3xl text-center">
+                    <img src="shield.png" alt="Shield" class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:6 object-contain">
+                    <h4 class="text-base md:text-xl font-black uppercase mb-2 md:3">Nova Shield</h4>
+                    <p class="text-gray-400 text-[10px] md:text-sm">Grants a shield and explodes nearby meteorites.</p>
+                </div>
+                <div class="item-card p-6 md:p-8 rounded-2xl md:rounded-3xl text-center">
+                    <img src="star.png" alt="Stars" class="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 md:6 object-contain">
+                    <h4 class="text-base md:text-xl font-black uppercase mb-2 md:3">Stars</h4>
+                    <p class="text-gray-400 text-[10px] md:text-sm">Small: <span class="text-white font-bold">+1</span> | Large: <span class="astro-orange font-bold">+5</span></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="tokenomics" class="py-32 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-5xl font-black italic uppercase mb-20 text-center tracking-tighter">ASTRO<span class="astro-orange text-6xl">NOMICS</span></h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="card-glass p-8 rounded-3xl text-center">
-                    <p class="text-[10px] font-black uppercase text-gray-500 mb-2 italic">Supply</p>
-                    <p class="text-2xl font-black italic">1B</p>
+    <section id="concept" class="py-16 md:py-24 px-4 max-w-5xl mx-auto border-t border-white/10 text-center">
+        <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-xs md:text-sm">The Collection</h3>
+        <h2 class="text-3xl md:text-5xl font-black italic uppercase mb-6 md:mb-8">Skin <span class="astro-orange">Fleet</span></h2>
+        <p class="text-gray-300 text-sm md:text-lg leading-relaxed mb-8 md:mb-12 max-w-2xl mx-auto text-center">
+            Unlock dozens of unique rockets as you climb the ranks. Each skin is a testament to your status in the <span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span> universe.
+        </p>
+        <div class="rocket-grid p-4 md:p-8 card-glass rounded-2xl md:rounded-3xl">
+            <img src="rocket2.png" alt="R2"><img src="rocket3.png" alt="R3"><img src="rocket4.png" alt="R4"><img src="rocket5.png" alt="R5">
+            <img src="rocket6.png" alt="R6"><img src="rocket7.png" alt="R7"><img src="rocket8.png" alt="R8"><img src="rocket9.png" alt="R9">
+            <img src="rocket10.png" alt="R10"><img src="rocket11.png" alt="R11"><img src="rocket12.png" alt="R12"><img src="rocket13.png" alt="R13">
+            <img src="rocket14.png" alt="R14"><img src="rocket15.png" alt="R15"><img src="rocket16.png" alt="R16"><img src="rocket17.png" alt="R17">
+            <img src="rocket18.png" alt="R18"><img src="rocket19.png" alt="R19"><img src="rocket20.png" alt="R20"><img src="rocket21.png" alt="R21">
+            <img src="rocket22.png" alt="R22"><img src="rocket23.png" alt="R23"><img src="rocket24.png" alt="R24"><img src="rocket25.png" alt="R25">
+            <img src="rocket26.png" alt="R26"><img src="rocket27.png" alt="R27">
+        </div>
+    </section>
+
+    <section id="ranks" class="py-16 md:py-24 px-6 bg-white/[0.02] border-t border-white/10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12 md:mb-16">
+                <h3 class="text-blue-500 font-bold uppercase tracking-widest mb-4 text-xs md:text-sm">Progression</h3>
+                <h2 class="text-3xl md:text-5xl font-black italic uppercase mb-4">Rank <span class="astro-blue">System</span></h2>
+                <p class="text-gray-400 text-sm md:text-lg font-medium italic uppercase tracking-wide">The more stars you collect, the higher your rank becomes.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-gray-600">
+                    <span class="text-[9px] font-black uppercase text-gray-500 bg-gray-500/10 px-2 py-1 rounded">0 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Interstellar Recruit</h4>
                 </div>
-                <div class="card-glass p-8 rounded-3xl text-center border-astro-orange/20">
-                    <p class="text-[10px] font-black uppercase text-astro-orange mb-2 italic">Fee Burn</p>
-                    <p class="text-2xl font-black italic">60%</p>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-blue-500">
+                    <span class="text-[9px] font-black uppercase text-blue-400 bg-blue-400/10 px-2 py-1 rounded">500 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Space Adventurer</h4>
                 </div>
-                <div class="card-glass p-8 rounded-3xl text-center border-astro-blue/20">
-                    <p class="text-[10px] font-black uppercase text-astro-blue mb-2 italic">Fee Pool</p>
-                    <p class="text-2xl font-black italic">40%</p>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-cyan-400">
+                    <span class="text-[9px] font-black uppercase text-cyan-400 bg-cyan-400/10 px-2 py-1 rounded">1,000 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Meteorite Hunter</h4>
                 </div>
-                <div class="card-glass p-8 rounded-3xl text-center">
-                    <p class="text-[10px] font-black uppercase text-gray-500 mb-2 italic">LP</p>
-                    <p class="text-2xl font-black italic">Burned</p>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-indigo-500">
+                    <span class="text-[9px] font-black uppercase text-indigo-500 bg-indigo-500/10 px-2 py-1 rounded">1,500 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Cosmic Explorer</h4>
+                </div>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-purple-500">
+                    <span class="text-[9px] font-black uppercase text-purple-500 bg-purple-500/10 px-2 py-1 rounded">2,000 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3 text-purple-400">Legendary Pilot</h4>
+                </div>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-pink-500">
+                    <span class="text-[9px] font-black uppercase text-pink-500 bg-pink-500/10 px-2 py-1 rounded">2,500 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Stellar Commander</h4>
+                </div>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-red-500">
+                    <span class="text-[9px] font-black uppercase text-red-500 bg-red-500/10 px-2 py-1 rounded">3,500 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Galactic Hero</h4>
+                </div>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-orange-600">
+                    <span class="text-[9px] font-black uppercase text-orange-600 bg-orange-600/10 px-2 py-1 rounded">5,000 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Astral Veteran</h4>
+                </div>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-orange-400">
+                    <span class="text-[9px] font-black uppercase text-orange-400 bg-orange-400/10 px-2 py-1 rounded">6,500 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3">Space Ace</h4>
+                </div>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-yellow-500">
+                    <span class="text-[9px] font-black uppercase text-yellow-500 bg-yellow-500/10 px-2 py-1 rounded">8,000 Stars</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3 text-yellow-500">Star Guardian</h4>
+                </div>
+                <div class="item-card p-4 md:p-6 rounded-xl md:rounded-2xl border-l-4 border-l-yellow-300 shadow-[0_0_30px_rgba(255,255,255,0.05)] bg-gradient-to-br from-white/5 to-yellow-500/5">
+                    <span class="text-[9px] font-black uppercase text-yellow-200 bg-yellow-500/30 px-2 py-1 rounded">Ultimate Goal</span>
+                    <h4 class="text-base md:text-lg font-black uppercase mt-2 md:mt-3 text-white">Legend of the Universe</h4>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="roadmap" class="py-32 px-6 bg-black relative">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-5xl font-black italic uppercase mb-24 text-center tracking-tighter italic">Strategic <span class="astro-blue">Roadmap</span></h2>
-            <div class="relative space-y-12">
-                <div class="absolute left-8 md:left-1/2 h-full w-px bg-white/10 -translate-x-1/2 hidden md:block"></div>
+    <section id="ui" class="py-16 md:py-24 px-6 bg-white/[0.01] border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-3xl md:text-4xl font-black italic uppercase text-center">Game <span class="astro-orange">Interface</span></h2>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 items-start">
+                <img src="Capture d’écran 2026-04-18 à 15.21.33.png" class="ui-screenshot" alt="Menu">
+                <img src="Capture d’écran 2026-04-18 à 15.21.01.png" class="ui-screenshot" alt="Ranks">
+                <img src="Capture d’écran 2026-04-18 à 14.27.16.png" class="ui-screenshot" alt="Gameplay">
+                <img src="Capture d’écran 2026-04-18 à 15.22.18.png" class="ui-screenshot" alt="Game Over">
+                <img src="Capture d’écran 2026-04-18 à 15.21.54.png" class="ui-screenshot" alt="Phone View">
+            </div>
+        </div>
+    </section>
+
+    <section id="burn" class="py-16 md:py-24 bg-[#040509] border-y border-white/5 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <h3 class="text-orange-500 font-bold uppercase tracking-widest mb-4 text-[10px] md:text-xs">Circular Economy</h3>
+                <h2 class="text-3xl md:text-4xl font-black italic uppercase mb-6 md:mb-8 tracking-tighter">Reward <span class="astro-orange">Engine</span></h2>
                 
-                <div class="relative flex flex-col md:flex-row md:justify-between items-center group">
-                    <div class="hidden md:block absolute left-1/2 -translate-x-1/2 z-10 text-astro-blue bg-black p-2"><i class="fas fa-circle text-[8px]"></i></div>
-                    <div class="w-full md:w-[45%] card-glass p-10 rounded-[3rem] border-astro-blue/30">
-                        <h4 class="font-black uppercase mb-4 text-astro-blue italic text-xl">Phase 1 — Genesis</h4>
-                        <ul class="text-gray-400 text-sm space-y-3 italic font-medium">
-                            <li>• Website & Game Alpha Launch</li>
-                            <li>• Token Deployment on Solana</li>
-                            <li>• Initial Marketing & Community Setup</li>
-                        </ul>
+                <h3 class="text-base md:text-xl font-black italic uppercase mb-6 md:mb-8">
+                    Welcome to <span class="astro-orange">Play to Earn SOL</span>.
+                </h3>
+                
+                <div class="inline-flex flex-col md:flex-row items-center gap-4 bg-white/[0.03] border border-white/10 p-4 md:p-1 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl mb-10">
+                    <div class="px-4 md:px-8 py-2 md:py-4">
+                        <span class="text-xl md:text-3xl font-black italic tracking-tighter text-white uppercase">SHARE THE POOL :</span>
                     </div>
-                    <div class="hidden md:block w-[45%]"></div>
+                    <div class="flex items-center gap-3 md:gap-4 bg-black/60 px-6 md:px-10 py-4 md:py-6 rounded-[1.2rem] md:rounded-[1.8rem] border border-white/5 shadow-inner">
+                        <div class="text-center">
+                            <span class="block text-2xl md:text-5xl font-black text-astro-orange text-glow-orange">⭐</span>
+                            <span class="block text-[8px] md:text-[10px] font-black uppercase text-astro-orange/60">COLLECT</span>
+                        </div>
+                        <span class="text-xl font-bold text-gray-600">=</span>
+                        <div class="text-center">
+                            <span class="block text-2xl md:text-5xl font-black text-astro-blue text-glow-blue">SOL</span>
+                            <span class="block text-[8px] md:text-[10px] font-black uppercase text-astro-blue/60">REWARDS</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="relative flex flex-col md:flex-row md:justify-between items-center group">
-                    <div class="hidden md:block absolute left-1/2 -translate-x-1/2 z-10 text-astro-orange bg-black p-2"><i class="fas fa-rocket"></i></div>
-                    <div class="hidden md:block w-[45%]"></div>
-                    <div class="w-full md:w-[45%] card-glass p-10 rounded-[3rem] border-astro-orange/30">
-                        <h4 class="font-black uppercase mb-4 text-astro-orange italic text-xl">Phase 2 — SOL-Pool Activation</h4>
-                        <ul class="text-gray-400 text-sm space-y-3 italic font-medium">
-                            <li>• Activation of Weekly SOL Distributions</li>
-                            <li>• Coingecko & CMC Listings</li>
-                            <li>• Influenceurs Solana Marketing Push</li>
-                        </ul>
+            <div class="max-w-5xl mx-auto mb-10">
+                <div class="flex flex-row items-center justify-between gap-1 md:gap-4 bg-white/[0.02] border border-white/5 p-3 md:p-6 rounded-[1.5rem] md:rounded-[2rem]">
+                    
+                    <div class="flex-1 text-center">
+                        <i class="fas fa-gamepad text-astro-orange text-xs md:text-xl mb-1 md:2"></i>
+                        <p class="text-[8px] md:text-[13px] font-black uppercase text-white leading-tight">Players</p>
+                        <p class="hidden md:block text-[9px] text-gray-500 uppercase mt-1">Collect stars to earn</p>
+                    </div>
+
+                    <div class="text-gray-700"><i class="fas fa-chevron-right text-[10px] md:text-base"></i></div>
+
+                    <div class="flex-1 text-center">
+                        <i class="fas fa-chart-line text-astro-blue text-xs md:text-xl mb-1 md:2"></i>
+                        <p class="text-[8px] md:text-[13px] font-black uppercase text-white leading-tight">Trading Tax</p>
+                        <p class="hidden md:block text-[9px] text-gray-500 uppercase mt-1">Fills the SOL Pool</p>
+                    </div>
+
+                    <div class="text-gray-700"><i class="fas fa-chevron-right text-[10px] md:text-base"></i></div>
+
+                    <div class="flex-1 text-center">
+                        <i class="fas fa-wallet text-astro-orange text-xs md:text-xl mb-1 md:2"></i>
+                        <p class="text-[8px] md:text-[13px] font-black uppercase text-astro-orange leading-tight">SOL Payouts</p>
+                        <p class="hidden md:block text-[9px] text-astro-orange/60 uppercase mt-1">Distributed to players</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <p class="text-gray-400 text-[10px] md:text-sm font-medium leading-relaxed max-w-2xl mx-auto mb-10 italic px-4">
+                "A synergetic ecosystem: <span class="text-white">Traders</span> fuel the reward pool, <span class="text-white">Players</span> collect stars to claim their share. Together, we grow the value of ASTRO."
+            </p>
+
+                <div class="max-w-2xl mx-auto bg-white/5 border border-white/10 rounded-xl md:rounded-2xl p-4 mb-8">
+                    <p class="text-[8px] md:text-[9px] uppercase font-bold text-gray-500 mb-2 md:3 tracking-widest">Example Calculation :</p>
+                    <div class="flex flex-wrap justify-center gap-2 md:gap-8 text-[8px] md:text-[10px] font-black italic text-gray-300">
+                        <span>YOUR STARS / TOTAL STARS</span>
+                        <span class="text-gray-700 hidden md:inline">|</span>
+                        <span>X</span>
+                        <span class="text-gray-700 hidden md:inline">|</span>
+                        <span>SOL POOL</span>
+                        <span class="text-gray-700 hidden md:inline">|</span>
+                        <span>= YOUR EARNINGS</span>
+                    </div>
+                </div>
+
+                <div class="inline-flex items-center gap-2 md:gap-3 bg-blue-500/5 border border-blue-500/20 px-4 md:px-6 py-2 rounded-full mx-4">
+                    <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+                    <span class="text-blue-400/80 font-black text-[8px] md:text-[10px] uppercase tracking-wider">
+                        60% of taxes go to the SOL Pool | 40% to Marketing & Development
+                    </span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4 md:gap-6 max-w-5xl mx-auto mt-12">
+                <div class="stat-card p-6 md:p-8 rounded-2xl md:rounded-[30px] border-orange-500/10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-orange-500 rounded-lg md:rounded-xl flex items-center justify-center text-black">
+                            <i class="fas fa-hand-holding-usd text-sm"></i>
+                        </div>
+                        <h4 class="text-lg md:text-xl font-black uppercase italic text-orange-500">SOL Reward Pool</h4>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/5">
+                        <p class="text-lg md:text-xl font-black text-white italic">12.50 <span class="text-[8px] md:text-[9px] text-orange-500 font-bold uppercase ml-2 tracking-widest">SOL Currently in Pool</span></p>
+                    </div>
+                </div>
+
+                <div class="stat-card p-6 md:p-8 rounded-2xl md:rounded-[30px] border-blue-500/10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blue-500 rounded-lg md:rounded-xl flex items-center justify-center text-black">
+                            <i class="fas fa-star text-xs md:text-sm"></i>
+                        </div>
+                        <h4 class="text-lg md:text-xl font-black uppercase italic text-blue-500">Global Stars</h4>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-white/5">
+                        <p class="text-lg md:text-xl font-black text-white italic">1.2M <span class="text-[8px] md:text-[9px] text-blue-500 font-bold uppercase ml-2 tracking-widest">Stars Collected this week</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-24 px-6 text-center border-t border-white/5 bg-black">
-        <div class="text-3xl font-black italic mb-10 tracking-tighter uppercase"><span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span></div>
-        <div class="flex justify-center gap-8 text-2xl text-gray-600 mb-10">
-            <a href="https://x.com/PlaytoAstroBurn" target="_blank" class="hover:text-white transition"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="hover:text-white transition"><i class="fab fa-telegram"></i></a>
+    <section id="roadmap" class="py-16 md:py-24 px-6 bg-[#040509]">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-black italic uppercase text-center mb-16 italic">ASTRO<span class="astro-blue">MAP</span></h2>
+            <div class="relative timeline-container">
+                <div class="mb-12 md:flex justify-between items-center w-full">
+                    <div class="w-full md:w-[45%] card-glass p-8 rounded-3xl border-astro-blue/20">
+                        <h4 class="text-xl font-black uppercase mb-4 text-astro-blue italic">Phase 1 — Genesis</h4>
+                        <p class="text-sm text-gray-500 italic">Game launch, token deploy, community build.</p>
+                    </div>
+                </div>
+                <div class="mb-12 md:flex justify-between items-center w-full flex-row-reverse">
+                    <div class="w-full md:w-[45%] card-glass p-8 rounded-3xl border-astro-orange/20">
+                        <h4 class="text-xl font-black uppercase mb-4 text-astro-orange italic">Phase 2 — SOL-Pool</h4>
+                        <p class="text-sm text-gray-500 italic">Activation of the pool & weekly distributions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-24 px-6 text-center border-t border-white/5">
+        <div class="text-3xl font-black italic mb-8 uppercase tracking-tighter"><span class="astro-blue">ASTRO</span><span class="astro-orange">BURN</span></div>
+        <div class="flex justify-center gap-8 mb-8 text-2xl text-gray-500">
+            <a href="https://x.com/PlaytoAstroBurn" target="_blank" class="hover:text-white"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://t.me/PlaytoAstroBurn" target="_blank" class="hover:text-white"><i class="fab fa-telegram"></i></a>
         </div>
         <p class="text-[10px] text-gray-700 uppercase tracking-[0.4em] italic font-black">&copy; 2024 ASTROBURN. ALL RIGHTS RESERVED.</p>
     </footer>
