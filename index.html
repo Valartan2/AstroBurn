@@ -427,6 +427,37 @@
             </div>
         </div>
     </section>
+
+    <section id="dashboard" class="py-24 px-6 relative z-10 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-black italic uppercase mb-4">Live <span class="astro-blue">Stats</span></h2>
+                <div class="h-1 w-24 bg-astro-orange mx-auto"></div>
+            </div>
+
+            <div class="card-glass p-4 rounded-3xl border-astro-blue/20 overflow-hidden">
+                <div class="aspect-video w-full">
+                    <iframe 
+                        id="sheet-iframe"
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT-R8V4p_E1I7mGZ1-E9yY0Z5_C9v0v4h2L6_G3I9U8j8J_p3J-h-Y-q3Y-m7/pubhtml?widget=true&amp;headers=false" 
+                        class="w-full h-full rounded-2xl"
+                        frameborder="0">
+                    </iframe>
+                </div>
+            </div>
+            
+            <p class="text-center text-gray-500 mt-6 text-sm italic">
+                * Données mises à jour en temps réel (actualisation automatique toutes les 5 min).
+            </p>
+        </div>
+    </section>
+
+    <script>
+        setInterval(function() {
+            var iframe = document.getElementById('sheet-iframe');
+            iframe.src = iframe.src;
+        }, 300000); // 300 000 ms = 5 minutes
+    </script>
   <section id="roadmap" class="py-16 md:py-24 px-6 bg-[#040509]">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl md:text-5xl font-black italic uppercase text-center mb-16 italic">ASTRO<span class="astro-blue">MAP</span></h2>
